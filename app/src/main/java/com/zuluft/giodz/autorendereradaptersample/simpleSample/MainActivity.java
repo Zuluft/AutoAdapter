@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rvList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         AutoAdapter autoAdapter = new AutoAdapter();
+        autoAdapter.addAll(new UserRenderer(new UserModel("aaa", "bbb")));
         mRecyclerView.setAdapter(autoAdapter);
     }
 }
