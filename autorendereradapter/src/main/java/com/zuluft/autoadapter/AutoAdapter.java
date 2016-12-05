@@ -161,8 +161,9 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
     }
 
     @Override
-    public void addAll(List<IRenderable> items) {
-        mAdapterDataStructure.addAll(items);
+    public void addAll(List<? extends IRenderable> items) {
+        IRenderable[] renderables = new IRenderable[items.size()];
+        mAdapterDataStructure.addAll(items.toArray(renderables));
     }
 
     @Override

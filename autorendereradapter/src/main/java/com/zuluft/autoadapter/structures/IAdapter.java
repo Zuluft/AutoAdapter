@@ -20,7 +20,7 @@ public interface IAdapter {
 
     void addAll(IRenderable... items);
 
-    void addAll(List<IRenderable> items);
+    void addAll(List<? extends IRenderable> items);
 
     void remove(int position);
 

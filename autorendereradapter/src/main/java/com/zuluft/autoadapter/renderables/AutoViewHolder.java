@@ -1,5 +1,6 @@
 package com.zuluft.autoadapter.renderables;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -32,7 +33,7 @@ public class AutoViewHolder extends RecyclerView.ViewHolder {
         return mViewHolderOnClickObservable;
     }
 
-    public rx.Observable<? extends AutoViewHolder> getViewHolderOnChildClickObservable(int viewId) {
+    public final rx.Observable<? extends AutoViewHolder> getViewHolderOnChildClickObservable(int viewId) {
         if (mViewHolderOnChildClickObservable == null) {
             View childView = itemView.findViewById(viewId);
             if (childView == null) {
@@ -41,5 +42,13 @@ public class AutoViewHolder extends RecyclerView.ViewHolder {
             mViewHolderOnChildClickObservable = rx.Observable.create(subscriber -> childView.setOnClickListener(view -> handleSubscriber(subscriber)));
         }
         return mViewHolderOnChildClickObservable;
+    }
+
+    public Context getContext() {
+        return itemView.getContext();
+    }
+
+    public View findViewById(int id) {
+        return itemView.findViewById(id);
     }
 }
