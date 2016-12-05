@@ -13,10 +13,10 @@ import com.zuluft.autoadapter.annotations.ViewHolder;
 import com.zuluft.autoadapter.listeners.ItemInfo;
 import com.zuluft.autoadapter.listeners.ItemOnClickObserver;
 import com.zuluft.autoadapter.listeners.OnItemClickListener;
-import com.zuluft.autoadapter.renderables.IRenderable;
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
-import com.zuluft.autoadapter.structures.IAdapter;
+import com.zuluft.autoadapter.renderables.IRenderable;
 import com.zuluft.autoadapter.structures.AdapterDataStructure;
+import com.zuluft.autoadapter.structures.IAdapter;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -162,8 +162,8 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
 
     @Override
     public void addAll(List<? extends IRenderable> items) {
-        IRenderable[] renderables = new IRenderable[items.size()];
-        mAdapterDataStructure.addAll(items.toArray(renderables));
+        IRenderable[] tmp = new IRenderable[items.size()];
+        mAdapterDataStructure.addAll(items.toArray(tmp));
     }
 
     @Override
