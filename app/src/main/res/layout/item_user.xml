@@ -8,16 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:orientation="horizontal">
-
-
-        <ImageView
-            android:id="@+id/ivImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:id="@+id/tvName"
@@ -32,6 +24,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/ivDelete"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"

@@ -1,6 +1,7 @@
 package com.zuluft.autoadapter;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -156,7 +157,7 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
     }
 
     @Override
-    public void addAll(IRenderable... items) {
+    public void addAll(IRenderable[] items) {
         mAdapterDataStructure.addAll(items);
     }
 
