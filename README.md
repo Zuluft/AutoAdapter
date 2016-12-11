@@ -19,47 +19,7 @@ compile 'com.github.zuluft:autoadapter:v1.1'
 ## Usage:
 
 ### Step 1:
-create layout xml file:
-```
-item_footballer.xml
-```
-```xml
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:lines="1"
-            android:maxLines="1"
-            android:text="Zuluft"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/ivDelete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_delete" />
-
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
-```
+create layout xml file ```item_footballer.xml``` which contains ```TextView``` with id ```tvName``` and ```ImageView``` with id ```ivDelete```
 
 ### Step 2 (Optional):
 create model, which you want to be drawn on above created layout:
