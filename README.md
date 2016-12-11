@@ -107,7 +107,7 @@ create an ```Activity```, with the very simple ```RecyclerView``` in it's conten
 
 create ```FootballerModel``` objects:
 ```Java
-public static FootballerModel[] getUsers() {
+    public static FootballerModel[] getFootballers() {
         return new FootballerModel[]{
                 new FootballerModel("Leo Messi", 10, "Barcelona"),
                 new FootballerModel("Andres Iniesta", 8, "Barcelona"),
@@ -136,7 +136,7 @@ create the ```AutoAdapter``` instance, add ```FootballerRenderer``` objects and 
 mRecyclerView = (RecyclerView) findViewById(R.id.rvList);
 mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 AutoAdapter autoAdapter = new AutoAdapter();
-autoAdapter.addAll(convertToRenderer(getUsers()));
+autoAdapter.addAll(convertToRenderer(getFootballers());
 mRecyclerView.setAdapter(autoAdapter);
 ```
 
