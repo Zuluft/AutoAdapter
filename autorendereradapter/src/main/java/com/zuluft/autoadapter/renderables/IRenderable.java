@@ -8,9 +8,9 @@ public interface IRenderable<T extends AutoViewHolder> {
 
     void apply(T viewHolder);
 
-    <T extends IRenderable> int compareTo(T item2);
+    int compareTo(IRenderable item);
 
-    <T extends IRenderable> boolean areContentsTheSame(T item);
+    boolean areContentsTheSame(IRenderable item);
 
-    <T extends IRenderable> boolean areItemsTheSame(T item);
+    boolean areItemsTheSame(IRenderable item);
 }

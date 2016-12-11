@@ -7,7 +7,6 @@ import com.zuluft.giodz.autorendereradaptersample.models.FootballerModel;
  */
 
 public class Factory {
-    public static final String URL = "http://lorempixel.com/400/200";
 
     public static FootballerModel[] getUsers() {
         return new FootballerModel[]{

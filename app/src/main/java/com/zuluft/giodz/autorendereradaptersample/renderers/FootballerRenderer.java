@@ -15,8 +15,8 @@ import com.zuluft.giodz.autorendereradaptersample.models.FootballerModel;
  * Created by user on 12/4/16.
  */
 
-@Renderer(FootballerRenderer.UserViewHolder.class)
-public class FootballerRenderer extends Renderable<FootballerRenderer.UserViewHolder> {
+@Renderer(FootballerRenderer.FootballerViewHolder.class)
+public class FootballerRenderer extends Renderable<FootballerRenderer.FootballerViewHolder> {
 
     public final FootballerModel mFootballerModel;
 
@@ -24,34 +24,38 @@ public class FootballerRenderer extends Renderable<FootballerRenderer.UserViewHo
         return mFootballerModel.getName();
     }
 
-    public FootballerRenderer(FootballerModel mFootballerModel) {
-        this.mFootballerModel = mFootballerModel;
+    public FootballerRenderer(FootballerModel footballerModel) {
+        this.mFootballerModel = footballerModel;
     }
 
     @Override
-    public void apply(UserViewHolder viewHolder) {
+    public void apply(FootballerViewHolder viewHolder) {
         viewHolder.tvName.setText(mFootballerModel.getName());
     }
 
-    @ViewHolder(R.layout.item_user)
-    public static class UserViewHolder extends AutoViewHolder {
+    @Override
+    public boolean areItemsTheSame(IRenderable item) {
+        return super.areItemsTheSame(item);
+    }
+
+    @Override
+    public boolean areContentsTheSame(IRenderable item) {
+        return super.areContentsTheSame(item);
+    }
+
+    @Override
+    public int compareTo(IRenderable item) {
+        FootballerModel otherFootballer = ((FootballerRenderer) item).mFootballerModel;
+        return Integer.compare(mFootballerModel.getNumber(), otherFootballer.getNumber());
+    }
+
+    @ViewHolder(R.layout.item_footballer)
+    public static class FootballerViewHolder extends AutoViewHolder {
         private TextView tvName;
 
-        public UserViewHolder(View itemView) {
+        public FootballerViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) findViewById(R.id.tvName);
         }
-    }
-
-    @Override
-    public <T1 extends IRenderable> int compareTo(T1 item) {
-        FootballerRenderer footballerRenderer = (FootballerRenderer) item;
-        return Integer.compare(mFootballerModel.getNumber(), footballerRenderer.mFootballerModel.getNumber());
-    }
-
-    @Override
-    public <T1 extends IRenderable> boolean areItemsTheSame(T1 item) {
-        FootballerRenderer footballerRenderer = (FootballerRenderer) item;
-        return footballerRenderer.mFootballerModel.getNumber() == mFootballerModel.getNumber();
     }
 }

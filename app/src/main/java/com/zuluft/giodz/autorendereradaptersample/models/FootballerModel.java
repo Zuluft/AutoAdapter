@@ -5,9 +5,9 @@ package com.zuluft.giodz.autorendereradaptersample.models;
  */
 
 public class FootballerModel {
-    private String name;
-    private int number;
-    private String team;
+    private final String name;
+    private final int number;
+    private final String team;
 
 
     public FootballerModel(String name, int number, String team) {
