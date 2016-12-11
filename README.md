@@ -16,7 +16,7 @@ Add dependency to app gradle:
 compile 'com.github.zuluft:autoadapter:v1.1'
 ```
 
-## Usage:
+## Simple Sample:
 
 ### Step 1:
 create layout xml file ```item_footballer.xml``` which contains ```TextView``` with id ```tvName``` and ```ImageView``` with id ```ivDelete```
