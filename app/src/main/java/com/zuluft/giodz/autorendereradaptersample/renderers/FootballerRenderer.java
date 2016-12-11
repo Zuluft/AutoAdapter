@@ -11,47 +11,33 @@ import com.zuluft.autoadapter.renderables.Renderable;
 import com.zuluft.giodz.autorendereradaptersample.R;
 import com.zuluft.giodz.autorendereradaptersample.models.FootballerModel;
 
-/**
- * Created by user on 12/4/16.
- */
-
 @Renderer(FootballerRenderer.FootballerViewHolder.class)
 public class FootballerRenderer extends Renderable<FootballerRenderer.FootballerViewHolder> {
 
-    public final FootballerModel mFootballerModel;
+    public final FootballerModel footballerModel;
 
     public String getUsername() {
-        return mFootballerModel.getName();
+        return footballerModel.name;
     }
 
     public FootballerRenderer(FootballerModel footballerModel) {
-        this.mFootballerModel = footballerModel;
+        this.footballerModel = footballerModel;
     }
 
     @Override
     public void apply(FootballerViewHolder viewHolder) {
-        viewHolder.tvName.setText(mFootballerModel.getName());
-    }
-
-    @Override
-    public boolean areItemsTheSame(IRenderable item) {
-        return super.areItemsTheSame(item);
-    }
-
-    @Override
-    public boolean areContentsTheSame(IRenderable item) {
-        return super.areContentsTheSame(item);
+        viewHolder.tvName.setText(footballerModel.name);
     }
 
     @Override
     public int compareTo(IRenderable item) {
-        FootballerModel otherFootballer = ((FootballerRenderer) item).mFootballerModel;
-        return Integer.compare(mFootballerModel.getNumber(), otherFootballer.getNumber());
+        FootballerModel otherFootballer = ((FootballerRenderer) item).footballerModel;
+        return Integer.compare(footballerModel.number, otherFootballer.number);
     }
 
     @ViewHolder(R.layout.item_footballer)
     public static class FootballerViewHolder extends AutoViewHolder {
-        private TextView tvName;
+        private final TextView tvName;
 
         public FootballerViewHolder(View itemView) {
             super(itemView);

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
                 itemInfo -> toastName(itemInfo.object.getUsername()));
         autoAdapter.bindListener(FootballerRenderer.class, R.id.ivDelete,
                 itemInfo -> autoAdapter.remove(itemInfo.position));
-        autoAdapter.addAll(convertToRenderer(Factory.getUsers()));
+        autoAdapter.addAll(convertToRenderer(Factory.getFootballers()));
         mRecyclerView.setAdapter(autoAdapter);
     }
 
