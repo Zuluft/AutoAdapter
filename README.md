@@ -110,7 +110,7 @@ by this line
 ```
 we are telling ```AutoAdapter``` that we want to use instances of ```FootballerViewHolder``` for ```FootballerRenderer``` items.
 
-```Renderable``` Abtsract class has only one abstract method ```apply``` with generic argument type. In our example, this type is ```FootballerViewHolder```
+```Renderable``` Abtsract class has only one abstract method ```apply``` with generic argument type( In our example, this type is ```FootballerViewHolder``` ) and it's being invoked by ```RecyclerView```'s ```onBindViewHolder``` method.
 
 ### Step 5:
 
@@ -207,7 +207,7 @@ autoAdapter.add(new BoxerRenderer());
 They all will draw their own layout. They can use the same ```ViewHolder``` too.
 
 
-# This is f***ing awsame ! anything else ?
+# This is f***ing awesame ! anything else ?
 ```Auto Adapter``` is using ```SortedList``` and in every descedent of ```Renderable``` we can override these methods. 
 here are their default implementations:
 ```Java
