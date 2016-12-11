@@ -25,27 +25,15 @@ create layout xml file ```item_footballer.xml``` which contains ```TextView``` w
 create model, which you want to be drawn on above created layout:
 ```Java
 public class FootballerModel {
-    private final String name;
-    private final int number;
-    private final String team;
+    public final String name;
+    public final int number;
+    public final String team;
 
 
     public FootballerModel(String name, int number, String team) {
         this.name = name;
         this.number = number;
         this.team = team;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public String getName() {
-        return name;
     }
 }
 ```
@@ -55,7 +43,7 @@ create descendant of ```AutoViewHolder``` with ```ViewHolder``` annotation:
 ```Java
     @ViewHolder(R.layout.item_footballer)
     public class FootballerViewHolder extends AutoViewHolder {
-        private TextView tvName;
+        public final TextView tvName;
 
         public FootballerViewHolder(View itemView) {
             super(itemView);
@@ -77,24 +65,25 @@ create descedent of ```Renderable```  with ```Renderer``` annotation:
 @Renderer(FootballerRenderer.FootballerViewHolder.class)
 public class FootballerRenderer extends Renderable<FootballerRenderer.FootballerViewHolder> {
 
-    public final FootballerModel mFootballerModel;
+    public final FootballerModel footballerModel;
 
     public String getUsername() {
-        return mFootballerModel.getName();
+        return footballerModel.name;
     }
 
     public FootballerRenderer(FootballerModel footballerModel) {
-        this.mFootballerModel = footballerModel;
+        this.footballerModel = footballerModel;
     }
 
     @Override
     public void apply(FootballerViewHolder viewHolder) {
-        viewHolder.tvName.setText(mFootballerModel.getName());
+        viewHolder.tvName.setText(footballerModel.name);
     }
+    
 
     @ViewHolder(R.layout.item_footballer)
     public static class FootballerViewHolder extends AutoViewHolder {
-        private TextView tvName;
+        private final TextView tvName;
 
         public FootballerViewHolder(View itemView) {
             super(itemView);
@@ -115,23 +104,6 @@ we are telling ```AutoAdapter``` that we want to use instances of ```FootballerV
 ### Step 5:
 
 create an ```Activity```, with the very simple ```RecyclerView``` in it's content view:
-```xml
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none" />
-</RelativeLayout>
-```
 
 create ```FootballerModel``` objects:
 ```Java
@@ -233,8 +205,8 @@ For example, if we want ```FootballRenderers``` to be sorted by ```FootballerMod
 ```Java
     @Override
     public int compareTo(IRenderable item) {
-        FootballerModel otherFootballer = ((FootballerRenderer) item).mFootballerModel;
-        return Integer.compare(mFootballerModel.getNumber(), otherFootballer.getNumber());
+        FootballerModel otherFootballer = ((FootballerRenderer) item).footballerModel;
+        return Integer.compare(footballerModel.number, otherFootballer.number);
     }
 ```
 
