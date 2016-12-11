@@ -16,76 +16,24 @@ Add dependency to app gradle:
 compile 'com.github.zuluft:autoadapter:v1.1'
 ```
 
-## Usage:
+## Simple Sample:
 
 ### Step 1:
-create layout xml file:
-```
-item_footballer.xml
-```
-```xml
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:lines="1"
-            android:maxLines="1"
-            android:text="Zuluft"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/ivDelete"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_delete" />
-
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
-```
+create layout xml file ```item_footballer.xml``` which contains ```TextView``` with id ```tvName``` and ```ImageView``` with id ```ivDelete```
 
 ### Step 2 (Optional):
 create model, which you want to be drawn on above created layout:
 ```Java
 public class FootballerModel {
-    private final String name;
-    private final int number;
-    private final String team;
+    public final String name;
+    public final int number;
+    public final String team;
 
 
     public FootballerModel(String name, int number, String team) {
         this.name = name;
         this.number = number;
         this.team = team;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public String getName() {
-        return name;
     }
 }
 ```
@@ -95,7 +43,7 @@ create descendant of ```AutoViewHolder``` with ```ViewHolder``` annotation:
 ```Java
     @ViewHolder(R.layout.item_footballer)
     public class FootballerViewHolder extends AutoViewHolder {
-        private TextView tvName;
+        public final TextView tvName;
 
         public FootballerViewHolder(View itemView) {
             super(itemView);
@@ -117,24 +65,25 @@ create descedent of ```Renderable```  with ```Renderer``` annotation:
 @Renderer(FootballerRenderer.FootballerViewHolder.class)
 public class FootballerRenderer extends Renderable<FootballerRenderer.FootballerViewHolder> {
 
-    public final FootballerModel mFootballerModel;
+    public final FootballerModel footballerModel;
 
     public String getUsername() {
-        return mFootballerModel.getName();
+        return footballerModel.name;
     }
 
     public FootballerRenderer(FootballerModel footballerModel) {
-        this.mFootballerModel = footballerModel;
+        this.footballerModel = footballerModel;
     }
 
     @Override
     public void apply(FootballerViewHolder viewHolder) {
-        viewHolder.tvName.setText(mFootballerModel.getName());
+        viewHolder.tvName.setText(footballerModel.name);
     }
+    
 
     @ViewHolder(R.layout.item_footballer)
     public static class FootballerViewHolder extends AutoViewHolder {
-        private TextView tvName;
+        private final TextView tvName;
 
         public FootballerViewHolder(View itemView) {
             super(itemView);
@@ -150,32 +99,15 @@ by this line
 ```
 we are telling ```AutoAdapter``` that we want to use instances of ```FootballerViewHolder``` for ```FootballerRenderer``` items.
 
-```Renderable``` Abtsract class has only one abstract method ```apply``` with generic argument type. In our example, this type is ```FootballerViewHolder```
+```Renderable``` Abtsract class has only one abstract method ```apply``` with generic argument type( In our example, this type is ```FootballerViewHolder``` ) and it's being invoked by ```RecyclerView```'s ```onBindViewHolder``` method.
 
 ### Step 5:
 
 create an ```Activity```, with the very simple ```RecyclerView``` in it's content view:
-```xml
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none" />
-</RelativeLayout>
-```
 
 create ```FootballerModel``` objects:
 ```Java
-public static FootballerModel[] getUsers() {
+    public static FootballerModel[] getFootballers() {
         return new FootballerModel[]{
                 new FootballerModel("Leo Messi", 10, "Barcelona"),
                 new FootballerModel("Andres Iniesta", 8, "Barcelona"),
@@ -204,7 +136,7 @@ create the ```AutoAdapter``` instance, add ```FootballerRenderer``` objects and 
 mRecyclerView = (RecyclerView) findViewById(R.id.rvList);
 mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 AutoAdapter autoAdapter = new AutoAdapter();
-autoAdapter.addAll(convertToRenderer(getUsers()));
+autoAdapter.addAll(convertToRenderer(getFootballers());
 mRecyclerView.setAdapter(autoAdapter);
 ```
 
@@ -213,7 +145,7 @@ if you want to listen item clicks:
 autoAdapter.bindListener(FootballerRenderer.class,
                 itemInfo -> toastName(itemInfo.object.getUsername()));
 ```
-or if you want to listen clicks of any ```itemView```s child views, for example view with ```ivDelete``` id:
+or if you want to listen clicks of any ```itemView```s child views, for example view with id ```ivDelete```:
 ```Java
 autoAdapter.bindListener(FootballerRenderer.class, R.id.ivDelete,
                 itemInfo -> autoAdapter.remove(itemInfo.position));
@@ -247,7 +179,7 @@ autoAdapter.add(new BoxerRenderer());
 They all will draw their own layout. They can use the same ```ViewHolder``` too.
 
 
-# This is f***ing awsame ! anything else ?
+# This is f***ing awesame ! anything else ?
 ```Auto Adapter``` is using ```SortedList``` and in every descedent of ```Renderable``` we can override these methods. 
 here are their default implementations:
 ```Java
@@ -273,8 +205,8 @@ For example, if we want ```FootballRenderers``` to be sorted by ```FootballerMod
 ```Java
     @Override
     public int compareTo(IRenderable item) {
-        FootballerModel otherFootballer = ((FootballerRenderer) item).mFootballerModel;
-        return Integer.compare(mFootballerModel.getNumber(), otherFootballer.getNumber());
+        FootballerModel otherFootballer = ((FootballerRenderer) item).footballerModel;
+        return Integer.compare(footballerModel.number, otherFootballer.number);
     }
 ```
 
