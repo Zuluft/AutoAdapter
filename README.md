@@ -145,7 +145,7 @@ if you want to listen item clicks:
 autoAdapter.bindListener(FootballerRenderer.class,
                 itemInfo -> toastName(itemInfo.object.getUsername()));
 ```
-or if you want to listen clicks of any ```itemView```s child views, for example view with ```ivDelete``` id:
+or if you want to listen clicks of any ```itemView```s child views, for example view with id ```ivDelete```:
 ```Java
 autoAdapter.bindListener(FootballerRenderer.class, R.id.ivDelete,
                 itemInfo -> autoAdapter.remove(itemInfo.position));
