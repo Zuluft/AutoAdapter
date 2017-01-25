@@ -179,7 +179,7 @@ autoAdapter.add(new BoxerRenderer());
 They all will draw their own layout. They can use the same ```ViewHolder``` too.
 
 
-# This is f***ing awesame ! anything else ?
+# This is f***ing awesome ! anything else ?
 ```Auto Adapter``` is using ```SortedList``` and in every descedent of ```Renderable``` we can override these methods. 
 here are their default implementations:
 ```Java
