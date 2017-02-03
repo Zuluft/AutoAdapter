@@ -4,11 +4,12 @@ import com.zuluft.autoadapter.renderables.IRenderable;
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
 
 import rx.Observer;
+import rx.functions.Action1;
 
 /**
  * Created by zuluft on 11/28/16.
  */
-public class ItemOnClickObserver<T extends IRenderable, Q extends AutoViewHolder> implements Observer<ItemInfo<T, Q>> {
+public class ItemOnClickObserver<T extends IRenderable, Q extends AutoViewHolder> implements Action1<ItemInfo<T, Q>> {
 
     private OnItemClickListener<T, Q> mOnItemClickListener;
 
@@ -17,17 +18,7 @@ public class ItemOnClickObserver<T extends IRenderable, Q extends AutoViewHolder
     }
 
     @Override
-    public void onCompleted() {
-
-    }
-
-    @Override
-    public void onError(Throwable e) {
-
-    }
-
-    @Override
-    public void onNext(ItemInfo<T, Q> tqItemInfo) {
+    public void call(ItemInfo<T, Q> tqItemInfo) {
         mOnItemClickListener.onItemClicked(tqItemInfo);
     }
 }

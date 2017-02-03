@@ -33,7 +33,7 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
     private final SparseArray<Class<? extends AutoViewHolder>> mViewTypeViewHolderBinding = new SparseArray<>();
     private final SparseArray<OnItemClickListener> mItemClickListenerBinding = new SparseArray<>();
     private final SparseArray<Pair<Integer, OnItemClickListener>> mChildItemClickListenerBinding = new SparseArray<>();
-    private final AdapterDataStructure mAdapterDataStructure = new AdapterDataStructure(this);
+    protected final AdapterDataStructure mAdapterDataStructure = new AdapterDataStructure(this);
 
     @Override
     public AutoViewHolder onCreateViewHolder(ViewGroup parent, @LayoutRes int layoutId) {
@@ -195,5 +195,15 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
     @Override
     public IRenderable getItem(int position) {
         return mAdapterDataStructure.get(position);
+    }
+
+    @Override
+    public void beginUpdate() {
+        mAdapterDataStructure.beginBatchedUpdates();
+    }
+
+    @Override
+    public void commitUpdate() {
+        mAdapterDataStructure.endBatchedUpdates();
     }
 }

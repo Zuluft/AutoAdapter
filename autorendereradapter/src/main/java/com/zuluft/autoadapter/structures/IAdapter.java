@@ -33,4 +33,8 @@ public interface IAdapter {
     int indexOf(IRenderable item);
 
     IRenderable getItem(int position);
+
+    void beginUpdate();
+
+    void commitUpdate();
 }
