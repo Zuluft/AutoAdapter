@@ -13,7 +13,7 @@ Add it in your root build.gradle at the end of repositories:
 ```
 Add dependency to app gradle:
 ```Groovy
-compile 'com.github.zuluft:autoadapter:v1.1'
+compile 'com.github.zuluft:autoadapter:v1.5'
 ```
 
 ## Simple Sample:
