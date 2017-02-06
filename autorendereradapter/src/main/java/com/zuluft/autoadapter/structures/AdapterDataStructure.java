@@ -6,6 +6,11 @@ import android.support.v7.widget.util.SortedListAdapterCallback;
 import com.zuluft.autoadapter.AutoAdapter;
 import com.zuluft.autoadapter.renderables.IRenderable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
+
 
 /**
  * Created by zuluft on 11/28/16.
@@ -29,6 +34,62 @@ public class AdapterDataStructure extends SortedList<IRenderable> {
                 return autoAdapter.areItemsTheSame(item1, item2);
             }
         });
+    }
+
+    public void updateAll(List<IRenderable> list) {
+        Stack<IRenderable> itemsToRemove = new Stack<>();
+        AdapterDataStructure oldData = this;
+        int oldSize = this.size();
+        int newSize = list.size();
+        ArrayList<IRenderable> newData = new ArrayList<>(list);
+        Collections.sort(newData, (o1, o2) -> o1.compareTo(o2));
+        if (oldSize > 0) {
+            IRenderable oldItem;
+            IRenderable newItem;
+            for (int i = 0; i < oldSize; i++) {
+                oldItem = oldData.get(i);
+                boolean needRemove = true;
+                for (int j = 0; j < newSize; j++) {
+                    newItem = newData.get(j);
+                    if (oldItem.areItemsTheSame(newItem)) {
+                        needRemove = false;
+                        break;
+                    }
+                }
+                if (needRemove) {
+                    itemsToRemove.push(oldItem);
+                }
+            }
+        }
+        oldData.beginBatchedUpdates();
+        while (!itemsToRemove.empty()) {
+            oldData.remove(itemsToRemove.pop());
+        }
+        IRenderable item;
+        int oldIndex, newIndex;
+        for (int i = 0; i < newSize; i++) {
+            item = newData.get(i);
+            newIndex = i;
+            oldIndex = findSameItem(item);
+            if (oldIndex > SortedList.INVALID_POSITION) {
+                oldData.updateItemAt(oldIndex, item);
+                if (oldIndex != newIndex) {
+                    oldData.recalculatePositionOfItemAt(oldIndex);
+                }
+            } else {
+                oldData.add(item);
+            }
+        }
+        oldData.endBatchedUpdates();
+    }
+
+    private int findSameItem(IRenderable item) {
+        for (int pos = 0, size = this.size(); pos < size; pos++) {
+            if (this.get(pos).areItemsTheSame(item)) {
+                return pos;
+            }
+        }
+        return INVALID_POSITION;
     }
 
 

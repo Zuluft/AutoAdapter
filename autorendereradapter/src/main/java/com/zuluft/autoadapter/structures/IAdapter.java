@@ -37,4 +37,6 @@ public interface IAdapter {
     void beginUpdate();
 
     void commitUpdate();
+
+    void updateAll(List<IRenderable> list);
 }

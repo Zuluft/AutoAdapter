@@ -35,6 +35,17 @@ public class FootballerRenderer extends Renderable<FootballerRenderer.Footballer
         return Integer.compare(footballerModel.number, otherFootballer.number);
     }
 
+    @Override
+    public boolean areItemsTheSame(IRenderable item) {
+        FootballerRenderer footballerRenderer = (FootballerRenderer) item;
+        return footballerRenderer.footballerModel.name.equals(footballerModel.name);
+    }
+
+    @Override
+    public boolean areContentsTheSame(IRenderable item) {
+        return areItemsTheSame(item);
+    }
+
     @ViewHolder(R.layout.item_footballer)
     public static class FootballerViewHolder extends AutoViewHolder {
         private final TextView tvName;

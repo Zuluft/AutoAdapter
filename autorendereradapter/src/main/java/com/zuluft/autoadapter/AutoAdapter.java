@@ -2,6 +2,7 @@ package com.zuluft.autoadapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -20,7 +21,11 @@ import com.zuluft.autoadapter.structures.AdapterDataStructure;
 import com.zuluft.autoadapter.structures.IAdapter;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Stack;
 
 import rx.Observable;
 import rx.functions.Func1;
@@ -205,5 +210,10 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
     @Override
     public void commitUpdate() {
         mAdapterDataStructure.endBatchedUpdates();
+    }
+
+    @Override
+    public void updateAll(List<IRenderable> list) {
+        mAdapterDataStructure.updateAll(list);
     }
 }
