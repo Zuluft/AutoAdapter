@@ -19,6 +19,8 @@ public class ItemOnClickObserver<T extends IRenderable, Q extends AutoViewHolder
 
     @Override
     public void call(ItemInfo<T, Q> tqItemInfo) {
-        mOnItemClickListener.onItemClicked(tqItemInfo);
+        if (tqItemInfo != null) {
+            mOnItemClickListener.onItemClicked(tqItemInfo);
+        }
     }
 }

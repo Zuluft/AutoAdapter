@@ -85,7 +85,9 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
             @Override
             public ItemInfo call(AutoViewHolder autoViewHolder) {
                 int position = autoViewHolder.getAdapterPosition();
-                return new ItemInfo(position, mAdapterDataStructure.get(position), autoViewHolder);
+                return position != -1 ?
+                        new ItemInfo(position, mAdapterDataStructure.get(position), autoViewHolder)
+                        : null;
             }
         }).subscribe(new ItemOnClickObserver<>(onItemClickListener));
     }
