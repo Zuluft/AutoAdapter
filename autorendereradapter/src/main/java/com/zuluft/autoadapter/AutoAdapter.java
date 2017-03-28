@@ -42,7 +42,7 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
 
     @Override
     public AutoViewHolder onCreateViewHolder(ViewGroup parent, @LayoutRes int layoutId) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
+        final View view = createView(parent, layoutId);
         final AutoViewHolder autoViewHolder = createViewHolderInstance(mViewTypeViewHolderBinding.get(layoutId), view);
         final OnItemClickListener onItemClickListener = mItemClickListenerBinding.get(layoutId);
         if (onItemClickListener != null) {
@@ -53,6 +53,10 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
             setupOnChildClickObserver(autoViewHolder, pair);
         }
         return autoViewHolder;
+    }
+
+    protected View createView(ViewGroup parent, @LayoutRes int layoutId) {
+        return LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
     }
 
     private void setupOnChildClickObserver(AutoViewHolder autoViewHolder,
