@@ -28,10 +28,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         autoAdapter = new AutoAdapter();
 
-        autoAdapter.bindListener(FootballerRenderer.class,
-                itemInfo -> toastName(itemInfo.object.getUsername()));
+
         autoAdapter.bindListener(FootballerRenderer.class, R.id.ivDelete,
                 itemInfo -> autoAdapter.remove(itemInfo.position));
+        autoAdapter.bindListener(FootballerRenderer.class,
+                R.id.tvName,
+                itemInfo -> toastName(itemInfo.object.getUsername()));
         autoAdapter.addAll(convertToRenderer(Factory.getFootballers()));
         mRecyclerView.setAdapter(autoAdapter);
     }

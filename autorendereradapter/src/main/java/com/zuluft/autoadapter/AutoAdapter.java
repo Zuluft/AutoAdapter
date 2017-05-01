@@ -37,7 +37,7 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
 
     private final SparseArray<Class<? extends AutoViewHolder>> mViewTypeViewHolderBinding = new SparseArray<>();
     private final SparseArray<OnItemClickListener> mItemClickListenerBinding = new SparseArray<>();
-    private final SparseArray<Pair<Integer, OnItemClickListener>> mChildItemClickListenerBinding = new SparseArray<>();
+    private final SparseArray<List<Pair<Integer, OnItemClickListener>>> mChildItemClickListenerBinding = new SparseArray<>();
     protected final AdapterDataStructure mAdapterDataStructure = new AdapterDataStructure(this);
 
     @Override
@@ -48,9 +48,9 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
         if (onItemClickListener != null) {
             setupOnClickObservers(autoViewHolder, onItemClickListener);
         }
-        final Pair<Integer, OnItemClickListener> pair = mChildItemClickListenerBinding.get(layoutId);
-        if (pair != null) {
-            setupOnChildClickObserver(autoViewHolder, pair);
+        final List<Pair<Integer, OnItemClickListener>> pairs = mChildItemClickListenerBinding.get(layoutId);
+        if (pairs != null) {
+            setupOnChildClickObserver(autoViewHolder, pairs);
         }
         return autoViewHolder;
     }
@@ -60,8 +60,11 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
     }
 
     private void setupOnChildClickObserver(AutoViewHolder autoViewHolder,
-                                           Pair<Integer, OnItemClickListener> pair) {
-        mapAndSubscribeObservable(autoViewHolder.getViewHolderOnChildClickObservable(pair.first), pair.second);
+                                           List<Pair<Integer, OnItemClickListener>> pairs) {
+        for (Pair<Integer, OnItemClickListener> pair : pairs) {
+            mapAndSubscribeObservable(autoViewHolder
+                    .getViewHolderOnChildClickObservable(pair.first), pair.second);
+        }
     }
 
     public <Q extends AutoViewHolder, T extends IRenderable<Q>> void bindListener(final Class<T> clazz, final OnItemClickListener<T, Q> onItemClickListener) {
@@ -75,7 +78,13 @@ public class AutoAdapter extends RecyclerView.Adapter<AutoViewHolder> implements
                                                                                   final OnItemClickListener<T, Q> onItemClickListener) {
         final Renderer renderer = getRenderableAnnotation(clazz);
         final ViewHolder viewHolder = getViewHolderAnnotation(renderer.value());
-        mChildItemClickListenerBinding.put(viewHolder.value(), Pair.create(viewId, onItemClickListener));
+        List<Pair<Integer, OnItemClickListener>> pairs =
+                mChildItemClickListenerBinding.get(viewHolder.value());
+        if (pairs == null) {
+            pairs = new ArrayList<>();
+        }
+        pairs.add(Pair.create(viewId, onItemClickListener));
+        mChildItemClickListenerBinding.put(viewHolder.value(), pairs);
     }
 
 
