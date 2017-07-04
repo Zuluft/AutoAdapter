@@ -21,8 +21,13 @@ public class AutoViewHolder extends RecyclerView.ViewHolder {
 
     public rx.Observable<AutoViewHolder> getViewHolderOnClickObservable() {
         final PublishSubject<AutoViewHolder> publishSubject = PublishSubject.create();
-        itemView.setOnClickListener(view ->
-                publishSubject.onNext(this));
+        itemView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            publishSubject.onNext(AutoViewHolder.this);
+                                        }
+                                    }
+        );
         return publishSubject.asObservable();
     }
 
@@ -32,7 +37,12 @@ public class AutoViewHolder extends RecyclerView.ViewHolder {
             throw new RuntimeException(String.format("can't found view in %s with this Id: %d", getClass().getSimpleName(), viewId));
         }
         final PublishSubject<AutoViewHolder> publishSubject = PublishSubject.create();
-        childView.setOnClickListener(view -> publishSubject.onNext(this));
+        childView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publishSubject.onNext(AutoViewHolder.this);
+            }
+        });
         return publishSubject.asObservable();
     }
 
