@@ -8,6 +8,7 @@ import com.zuluft.autoadapter.renderables.IRenderable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 
@@ -42,7 +43,12 @@ public class AdapterDataStructure extends SortedList<IRenderable> {
         int oldSize = this.size();
         int newSize = list.size();
         ArrayList<IRenderable> newData = new ArrayList<>(list);
-        Collections.sort(newData, (o1, o2) -> o1.compareTo(o2));
+        Collections.sort(newData, new Comparator<IRenderable>() {
+            @Override
+            public int compare(IRenderable o1, IRenderable o2) {
+                return o1.compareTo(o2);
+            }
+        });
         if (oldSize > 0) {
             IRenderable oldItem;
             IRenderable newItem;
