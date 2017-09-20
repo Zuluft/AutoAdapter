@@ -1,1 +1,1 @@
-include ':app', ':autorendereradapter'
+include ':app', ':autoAdapter', ':autoAdapterAnnotations', ':processor'

@@ -76,8 +76,8 @@ public class FootballerRenderer extends Renderable<FootballerRenderer.Footballer
     }
 
     @Override
-    public void apply(FootballerViewHolder viewHolder) {
-        viewHolder.tvName.setText(footballerModel.name);
+    public void apply(FootballerViewHolder renderer) {
+        renderer.tvName.setText(footballerModel.name);
     }
     
 
@@ -155,12 +155,12 @@ this is ```ItemInfo``` class:
 public class ItemInfo<T extends IRenderable, V extends AutoViewHolder> {
     public final int position;
     public final T object;
-    public final V viewHolder;
+    public final V renderer;
 
-    public ItemInfo(int position, T object, V viewHolder) {
+    public ItemInfo(int position, T object, V renderer) {
         this.position = position;
         this.object = object;
-        this.viewHolder = viewHolder;
+        this.renderer = renderer;
     }
 }
 ```
