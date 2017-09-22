@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.zuluft.autoadapterannotations.Render;
 import com.zuluft.autoadapterannotations.ViewField;
+import com.zuluft.generated.TestRendererViewHolder;
 import com.zuluft.giodz.autorendereradaptersample.R;
 
 /**
@@ -19,5 +20,5 @@ import com.zuluft.giodz.autorendereradaptersample.R;
         }
 )
 public class TestRenderer {
-
+        TestRendererViewHolder
 }

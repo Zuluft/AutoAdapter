@@ -29,6 +29,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -86,9 +87,9 @@ public class Processor extends AbstractProcessor {
 
     private TypeSpec createViewHolderClass(ViewHolderInfo viewHolderInfo) {
         return TypeSpec
-                .classBuilder(viewHolderInfo.name + VIEW_HOLDER_SUFFIX)
+                .classBuilder(viewHolderInfo.name)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-//                .addFields(createViewHolderFields(viewHolderInfo.viewInfos))
+                .addFields(createViewHolderFields(viewHolderInfo.viewInfos))
                 .superclass(sViewHolderSuperClassName)
                 .addMethod(createConstructorForViewHolder(viewHolderInfo.viewInfos))
                 .build();
@@ -97,10 +98,10 @@ public class Processor extends AbstractProcessor {
     private Iterable<FieldSpec> createViewHolderFields(ViewInfo[] viewInfos) {
         List<FieldSpec> fieldSpecs = new ArrayList<>();
         for (ViewInfo viewInfo : viewInfos) {
-//            fieldSpecs.add(FieldSpec.builder(String.class,
-//                    viewInfo.name)
-//                    .addModifiers(Modifier.PUBLIC)
-//                    .build());
+            fieldSpecs.add(FieldSpec.builder(ClassName.get(viewInfo.canonicalName),
+                    viewInfo.name)
+                    .addModifiers(Modifier.PUBLIC)
+                    .build());
         }
         return fieldSpecs;
     }
@@ -115,10 +116,10 @@ public class Processor extends AbstractProcessor {
                         .build())
                 .addStatement("super(itemView)");
 
-//        for (ViewInfo viewInfo : viewInfos) {
-//            builder.addStatement("%s=(%s)findViewById(%d)", viewInfo.name,
-//                    ClassName.get(viewInfo.type), viewInfo.id);
-//        }
+        for (ViewInfo viewInfo : viewInfos) {
+            builder.addStatement("$L=($T)findViewById($L)", viewInfo.name,
+                    ClassName.get(viewInfo.canonicalName), viewInfo.id);
+        }
         return builder.build();
     }
 
@@ -129,9 +130,9 @@ public class Processor extends AbstractProcessor {
                         "Only classes can be annotated with @Render annotation");
             }
             Render renderAnnotation = element.getAnnotation(Render.class);
-            for (ViewField viewField : renderAnnotation.views()) {
-//                mElements.getTypeElement(viewField.type().getCanonicalName());
-            }
+            mViewHolderInfos.add(new
+                    ViewHolderInfo(element.getSimpleName().toString() + VIEW_HOLDER_SUFFIX,
+                    renderAnnotation.views()));
 
         }
         for (Element element : roundEnvironment.getElementsAnnotatedWith(ViewHolderFactory.class)) {
