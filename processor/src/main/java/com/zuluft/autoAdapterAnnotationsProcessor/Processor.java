@@ -253,7 +253,7 @@ public class Processor extends AbstractProcessor {
         for (ViewInfo viewInfo : viewInfos) {
             fieldSpecs.add(FieldSpec.builder(ClassName.get(viewInfo.canonicalName),
                     viewInfo.name)
-                    .addModifiers(Modifier.PUBLIC)
+                    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .build());
         }
         return fieldSpecs;
