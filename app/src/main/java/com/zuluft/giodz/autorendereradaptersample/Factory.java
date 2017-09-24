@@ -9,6 +9,7 @@ import com.zuluft.giodz.autorendereradaptersample.models.FootballerModel;
 public class Factory {
 
     public static FootballerModel[] getFootballers() {
+
         return new FootballerModel[]{
                 new FootballerModel("Leo Messi", 10, "Barcelona"),
                 new FootballerModel("Andres Iniesta", 8, "Barcelona"),

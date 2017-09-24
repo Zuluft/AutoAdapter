@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AutoRendererAdapterSample.iml" filepath="$PROJECT_DIR$/AutoRendererAdapterSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AutoAdapter.iml" filepath="$PROJECT_DIR$/AutoAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoAdapter/autoAdapter.iml" filepath="$PROJECT_DIR$/autoAdapter/autoAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/autoAdapterAnnotations/autoAdapterAnnotations.iml" filepath="$PROJECT_DIR$/autoAdapterAnnotations/autoAdapterAnnotations.iml" />

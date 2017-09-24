@@ -1,10 +1,12 @@
 package com.zuluft.autoadapter.structures;
 
+import android.support.annotation.NonNull;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.util.SortedListAdapterCallback;
 
-import com.zuluft.autoadapter.AutoAdapter;
-import com.zuluft.autoadapter.renderables.IRenderable;
+import com.zuluft.autoadapter.SortedAutoAdapter;
+import com.zuluft.autoadapter.renderables.IRenderer;
+import com.zuluft.autoadapter.renderables.OrderableRenderer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,42 +18,43 @@ import java.util.Stack;
 /**
  * Created by zuluft on 11/28/16.
  */
-public class AdapterDataStructure extends SortedList<IRenderable> {
+public class SortedAdapterDataStructure extends SortedList<OrderableRenderer> {
 
-    public AdapterDataStructure(final AutoAdapter autoAdapter) {
-        super(IRenderable.class, new SortedListAdapterCallback<IRenderable>(autoAdapter) {
+
+    public SortedAdapterDataStructure(@NonNull final SortedAutoAdapter autoAdapter) {
+        super(OrderableRenderer.class, new SortedListAdapterCallback<OrderableRenderer>(autoAdapter) {
             @Override
-            public int compare(IRenderable o1, IRenderable o2) {
+            public int compare(OrderableRenderer o1, OrderableRenderer o2) {
                 return autoAdapter.compare(o1, o2);
             }
 
             @Override
-            public boolean areContentsTheSame(IRenderable oldItem, IRenderable newItem) {
+            public boolean areContentsTheSame(OrderableRenderer oldItem, OrderableRenderer newItem) {
                 return autoAdapter.areContentsTheSame(oldItem, newItem);
             }
 
             @Override
-            public boolean areItemsTheSame(IRenderable item1, IRenderable item2) {
+            public boolean areItemsTheSame(OrderableRenderer item1, OrderableRenderer item2) {
                 return autoAdapter.areItemsTheSame(item1, item2);
             }
         });
     }
 
-    public void updateAll(List<IRenderable> list) {
-        Stack<IRenderable> itemsToRemove = new Stack<>();
-        AdapterDataStructure oldData = this;
+    public void updateAll(List<OrderableRenderer> list) {
+        Stack<OrderableRenderer> itemsToRemove = new Stack<>();
+        SortedAdapterDataStructure oldData = this;
         int oldSize = this.size();
         int newSize = list.size();
-        ArrayList<IRenderable> newData = new ArrayList<>(list);
-        Collections.sort(newData, new Comparator<IRenderable>() {
+        ArrayList<OrderableRenderer> newData = new ArrayList<>(list);
+        Collections.sort(newData, new Comparator<OrderableRenderer>() {
             @Override
-            public int compare(IRenderable o1, IRenderable o2) {
+            public int compare(OrderableRenderer o1, OrderableRenderer o2) {
                 return o1.compareTo(o2);
             }
         });
         if (oldSize > 0) {
-            IRenderable oldItem;
-            IRenderable newItem;
+            OrderableRenderer oldItem;
+            OrderableRenderer newItem;
             for (int i = 0; i < oldSize; i++) {
                 oldItem = oldData.get(i);
                 boolean needRemove = true;
@@ -71,7 +74,7 @@ public class AdapterDataStructure extends SortedList<IRenderable> {
         while (!itemsToRemove.empty()) {
             oldData.remove(itemsToRemove.pop());
         }
-        IRenderable item;
+        OrderableRenderer item;
         int oldIndex, newIndex;
         for (int i = 0; i < newSize; i++) {
             item = newData.get(i);
@@ -89,7 +92,7 @@ public class AdapterDataStructure extends SortedList<IRenderable> {
         oldData.endBatchedUpdates();
     }
 
-    private int findSameItem(IRenderable item) {
+    private int findSameItem(OrderableRenderer item) {
         for (int pos = 0, size = this.size(); pos < size; pos++) {
             if (this.get(pos).areItemsTheSame(item)) {
                 return pos;
@@ -97,6 +100,5 @@ public class AdapterDataStructure extends SortedList<IRenderable> {
         }
         return INVALID_POSITION;
     }
-
 
 }

@@ -1,7 +1,10 @@
 package com.zuluft.autoadapter.structures;
 
 
-import com.zuluft.autoadapter.renderables.IRenderable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.zuluft.autoadapter.renderables.IRenderer;
 
 import java.util.List;
 
@@ -9,34 +12,27 @@ import java.util.List;
  * Created by zuluft on 11/28/16.
  */
 
-public interface IAdapter {
-    int compare(IRenderable item1, IRenderable item2);
+public interface IAdapter<T extends IRenderer> {
 
-    boolean areContentsTheSame(IRenderable item1, IRenderable item2);
 
-    boolean areItemsTheSame(IRenderable item1, IRenderable item2);
+    void add(@NonNull T item);
 
-    void add(IRenderable item);
+    void addAll(@NonNull T... items);
 
-    void addAll(IRenderable... items);
-
-    void addAll(List<? extends IRenderable> items);
+    void addAll(@NonNull List<? extends T> items);
 
     void remove(int position);
 
-    void remove(IRenderable item);
+    void remove(@NonNull T item);
 
     void removeAll();
 
-    void update(int position, IRenderable newItem);
+    void update(int position, @NonNull T newItem);
 
-    int indexOf(IRenderable item);
+    int indexOf(@NonNull T item);
 
-    IRenderable getItem(int position);
+    @Nullable
+    T getItem(int position);
 
-    void beginUpdate();
 
-    void commitUpdate();
-
-    void updateAll(List<IRenderable> list);
 }
