@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 new TestRenderer(),
         };
         autoAdapter.addAll(iRenderers);
-        autoAdapter.clicks(TestRenderer.class).subscribe(itemInfo -> toastName("itemClick"));
-        autoAdapter.clicks(TestRenderer.class, R.id.ivDelete).subscribe(itemInfo -> toastName("deleteClick"));
+//        autoAdapter.clicks(TestRenderer.class).subscribe(itemInfo -> toastName("itemClick"));
+//        autoAdapter.clicks(TestRenderer.class, R.id.ivDelete).subscribe(itemInfo -> toastName("deleteClick"));
         mRecyclerView.setAdapter(autoAdapter);
     }
 
