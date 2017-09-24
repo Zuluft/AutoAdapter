@@ -1,4 +1,7 @@
 apply plugin: 'java-library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.Zuluft'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
