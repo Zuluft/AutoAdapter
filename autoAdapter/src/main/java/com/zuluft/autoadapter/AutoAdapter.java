@@ -71,12 +71,7 @@ public class AutoAdapter
     }
 
     @Override
-    @Nullable
     public IRenderer getItem(int position) {
-        try {
-            return mRenderers.get(position);
-        } catch (IndexOutOfBoundsException ex) {
-            return null;
-        }
+        return mRenderers.get(position);
     }
 }

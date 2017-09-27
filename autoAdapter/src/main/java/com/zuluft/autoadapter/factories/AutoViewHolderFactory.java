@@ -13,8 +13,6 @@ import com.zuluft.autoadapter.renderables.IRenderer;
 
 public abstract class AutoViewHolderFactory {
 
-    public abstract Class getRendererClass(int layoutId);
-
     public abstract int getLayoutId(IRenderer renderer);
 
     public abstract AutoViewHolder createViewHolder(ViewGroup parent, int layoutId);

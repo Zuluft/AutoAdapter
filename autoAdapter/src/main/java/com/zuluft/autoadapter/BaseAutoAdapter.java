@@ -4,6 +4,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.zuluft.autoadapter.factories.AutoViewHolderFactory;
@@ -35,6 +36,8 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
             mItemViewClickBinding = new HashMap<>();
     private final Map<Class<? extends IRenderer>, Map<Integer, PublishSubject>>
             mChildViewsClickBinding = new HashMap<>();
+    private final SparseArray<Class<? extends IRenderer>>
+            mLayoutRendererMaping = new SparseArray<>();
 
     public BaseAutoAdapter(final AutoViewHolderFactory autoViewHolderFactory) {
         this.mAutoViewHolderFactory = autoViewHolderFactory;
@@ -43,7 +46,7 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
     @Override
     public AutoViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int layoutId) {
         AutoViewHolder viewHolder = mAutoViewHolderFactory.createViewHolder(parent, layoutId);
-        Class rendererClass = mAutoViewHolderFactory.getRendererClass(layoutId);
+        Class rendererClass = mLayoutRendererMaping.get(layoutId);
         final PublishSubject itemClickPublishSubject = mItemViewClickBinding.get(rendererClass);
         if (itemClickPublishSubject != null) {
             viewHolder.getViewHolderOnClickObservable()
@@ -132,13 +135,19 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onBindViewHolder(AutoViewHolder holder, int position) {
+    public void onBindViewHolder(final AutoViewHolder holder,
+                                 final int position) {
         getItem(position).apply(holder);
     }
 
     @Override
     @LayoutRes
-    public int getItemViewType(int position) {
-        return mAutoViewHolderFactory.getLayoutId(getItem(position));
+    public int getItemViewType(final int position) {
+        final T item = getItem(position);
+        final int layoutId = mAutoViewHolderFactory.getLayoutId(getItem(position));
+        if (mLayoutRendererMaping.indexOfKey(layoutId) < 0) {
+            mLayoutRendererMaping.put(layoutId, item.getClass());
+        }
+        return layoutId;
     }
 }

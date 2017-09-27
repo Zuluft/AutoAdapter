@@ -31,7 +31,6 @@ public interface IAdapter<T extends IRenderer> {
 
     int indexOf(@NonNull T item);
 
-    @Nullable
     T getItem(int position);
 
 

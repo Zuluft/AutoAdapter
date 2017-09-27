@@ -156,28 +156,10 @@ public class Processor extends AbstractProcessor {
         return TypeSpec.classBuilder(GENERATED_VIEW_HOLDER_FACTORY_CLASS_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .superclass(sViewHolderFactorySuperClassName)
-                .addMethod(createGetRendererClassMethod())
                 .addMethod(createGetLayoutIdMethod())
                 .addMethod(createGetViewHolderMethod())
                 .addMethod(createViewHolderFactoryConstructor())
                 .build();
-    }
-
-    private MethodSpec createGetRendererClassMethod() {
-        MethodSpec.Builder builder = MethodSpec.methodBuilder("getRendererClass")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterSpec.builder(
-                        TypeName.INT, "layoutId", Modifier.FINAL)
-                        .build())
-                .returns(ClassName.get("java.lang", "Class"));
-        for (Map.Entry<TypeName, Integer> entry : mRendererLayoutIdMapping.entrySet()) {
-            builder.beginControlFlow("if($L==$L)",
-                    "layoutId", entry.getValue())
-                    .addStatement("return $T.class", entry.getKey())
-                    .endControlFlow();
-        }
-        builder.addStatement("return null");
-        return builder.build();
     }
 
     private MethodSpec createViewHolderFactoryConstructor() {
