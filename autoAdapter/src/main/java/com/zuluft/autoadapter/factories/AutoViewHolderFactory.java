@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
 import com.zuluft.autoadapter.renderables.IRenderer;
 
-/**
- * Created by giodz on 9/24/2017.
- */
 
 public abstract class AutoViewHolderFactory {
 

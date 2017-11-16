@@ -1,14 +1,8 @@
 package com.zuluft.autoAdapterAnnotationsProcessor;
 
-import com.zuluft.autoadapterannotations.Render;
 import com.zuluft.autoadapterannotations.ViewField;
 
-import java.util.Map;
-
-/**
- * Created by giodz on 9/20/2017.
- */
-
+@SuppressWarnings("WeakerAccess")
 public class ViewHolderInfo {
     public final String name;
     public final ViewInfo[] viewInfos;

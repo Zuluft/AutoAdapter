@@ -1,8 +1,6 @@
 package com.zuluft.autoadapter;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.zuluft.autoadapter.factories.AutoViewHolderFactory;
 import com.zuluft.autoadapter.renderables.IRenderer;
 
@@ -10,17 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by giodz on 9/24/2017.
- */
-
 public class AutoAdapter
         extends
         BaseAutoAdapter<IRenderer> {
 
     private final List<IRenderer> mRenderers = new ArrayList<>();
 
-    public AutoAdapter(AutoViewHolderFactory autoViewHolderFactory) {
+    public AutoAdapter(final @NonNull AutoViewHolderFactory autoViewHolderFactory) {
         super(autoViewHolderFactory);
     }
 
@@ -30,7 +24,7 @@ public class AutoAdapter
     }
 
     @Override
-    public void add(@NonNull IRenderer item) {
+    public void add(@NonNull final IRenderer item) {
         mRenderers.add(item);
     }
 
@@ -45,7 +39,7 @@ public class AutoAdapter
     }
 
     @Override
-    public void remove(int position) {
+    public void remove(final int position) {
         mRenderers.remove(position);
     }
 
@@ -60,7 +54,7 @@ public class AutoAdapter
     }
 
     @Override
-    public void update(int position, @NonNull IRenderer newItem) {
+    public void update(final int position, @NonNull final IRenderer newItem) {
         mRenderers.remove(position);
         mRenderers.add(position, newItem);
     }
@@ -71,7 +65,7 @@ public class AutoAdapter
     }
 
     @Override
-    public IRenderer getItem(int position) {
+    public IRenderer getItem(final int position) {
         return mRenderers.get(position);
     }
 }

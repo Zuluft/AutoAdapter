@@ -20,10 +20,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by giodz on 9/24/2017.
- */
-
+@SuppressWarnings({"unused", "WeakerAccess"})
 public abstract class BaseAutoAdapter<T extends IRenderer>
         extends
         RecyclerView.Adapter<AutoViewHolder>
@@ -113,16 +110,16 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
         return viewHolder;
     }
 
-    public final <T extends AutoViewHolder, R extends IRenderer<T>> PublishSubject<ItemInfo<R, T>>
-    clicks(@NonNull final Class<R> clazz) {
-        PublishSubject<ItemInfo<R, T>> publishSubject = PublishSubject.create();
+    public final <X extends AutoViewHolder, Y extends IRenderer<X>> PublishSubject<ItemInfo<Y, X>>
+    clicks(@NonNull final Class<Y> clazz) {
+        PublishSubject<ItemInfo<Y, X>> publishSubject = PublishSubject.create();
         mItemViewClickBinding.put(clazz, publishSubject);
         return publishSubject;
     }
 
-    public final <T extends AutoViewHolder, R extends IRenderer<T>> PublishSubject<ItemInfo<R, T>>
-    clicks(@NonNull final Class<R> clazz, @IdRes final int viewId) {
-        PublishSubject<ItemInfo<R, T>> publishSubject = PublishSubject.create();
+    public final <X extends AutoViewHolder, Y extends IRenderer<X>> PublishSubject<ItemInfo<Y, X>>
+    clicks(@NonNull final Class<Y> clazz, @IdRes final int viewId) {
+        PublishSubject<ItemInfo<Y, X>> publishSubject = PublishSubject.create();
         Map<Integer, PublishSubject> map = mChildViewsClickBinding.get(clazz);
         if (map == null) {
             map = new HashMap<>();

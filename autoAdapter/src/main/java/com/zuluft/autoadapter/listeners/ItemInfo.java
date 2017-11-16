@@ -4,10 +4,8 @@ package com.zuluft.autoadapter.listeners;
 import com.zuluft.autoadapter.renderables.IRenderer;
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
 
-/**
- * Created by zuluft on 11/28/16.
- */
 
+@SuppressWarnings("WeakerAccess")
 public class ItemInfo<T extends IRenderer, V extends AutoViewHolder> {
     public final int position;
     public final T renderer;

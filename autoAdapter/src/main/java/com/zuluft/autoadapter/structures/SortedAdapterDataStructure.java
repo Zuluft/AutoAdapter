@@ -5,7 +5,6 @@ import android.support.v7.util.SortedList;
 import android.support.v7.widget.util.SortedListAdapterCallback;
 
 import com.zuluft.autoadapter.SortedAutoAdapter;
-import com.zuluft.autoadapter.renderables.IRenderer;
 import com.zuluft.autoadapter.renderables.OrderableRenderer;
 
 import java.util.ArrayList;
@@ -15,9 +14,6 @@ import java.util.List;
 import java.util.Stack;
 
 
-/**
- * Created by zuluft on 11/28/16.
- */
 public class SortedAdapterDataStructure extends SortedList<OrderableRenderer> {
 
 

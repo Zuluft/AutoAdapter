@@ -2,10 +2,7 @@ package com.zuluft.autoadapter.renderables;
 
 import android.support.annotation.NonNull;
 
-/**
- * Created by giodz on 9/23/2017.
- */
-
+@SuppressWarnings("WeakerAccess")
 public abstract class OrderableRenderer<T extends AutoViewHolder>
         implements
         IRenderer<T> {
@@ -20,10 +17,7 @@ public abstract class OrderableRenderer<T extends AutoViewHolder>
 
     public final boolean hasSameOrderIds(@NonNull OrderableRenderer item) {
         int result = Integer.valueOf(getOrderId()).compareTo(item.getOrderId());
-        if (result == 0) {
-            return areItemsTheSame(item);
-        }
-        return false;
+        return result == 0 && areItemsTheSame(item);
     }
 
     public abstract int compareTo(@NonNull OrderableRenderer item);

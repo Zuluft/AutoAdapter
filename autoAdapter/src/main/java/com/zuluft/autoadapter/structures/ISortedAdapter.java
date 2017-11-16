@@ -1,21 +1,22 @@
 package com.zuluft.autoadapter.structures;
 
-import com.zuluft.autoadapter.renderables.IRenderer;
+import android.support.annotation.NonNull;
+
 import com.zuluft.autoadapter.renderables.OrderableRenderer;
 
 import java.util.List;
 
-/**
- * Created by giodz on 9/23/2017.
- */
-
+@SuppressWarnings("unused")
 public interface ISortedAdapter {
 
-    int compare(OrderableRenderer item1, OrderableRenderer item2);
+    int compare(@NonNull OrderableRenderer item1,
+                @NonNull OrderableRenderer item2);
 
-    boolean areContentsTheSame(OrderableRenderer item1, OrderableRenderer item2);
+    boolean areContentsTheSame(@NonNull OrderableRenderer item1,
+                               @NonNull OrderableRenderer item2);
 
-    boolean areItemsTheSame(OrderableRenderer item1, OrderableRenderer item2);
+    boolean areItemsTheSame(@NonNull OrderableRenderer item1,
+                            @NonNull OrderableRenderer item2);
 
     void beginUpdate();
 

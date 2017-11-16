@@ -9,13 +9,9 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import io.reactivex.subjects.PublishSubject;
 
 
-/**
- * Created by zuluft on 11/28/16.
- */
-
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class AutoViewHolder extends RecyclerView.ViewHolder {
 
 

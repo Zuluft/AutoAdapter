@@ -1,12 +1,9 @@
 package com.zuluft.autoAdapterAnnotationsProcessor;
 
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeMirror;
 
-/**
- * Created by giodz on 9/20/2017.
- */
 
+@SuppressWarnings("WeakerAccess")
 public class ViewInfo {
     public final int id;
     public final String name;

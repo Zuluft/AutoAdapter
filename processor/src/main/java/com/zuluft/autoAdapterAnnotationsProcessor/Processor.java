@@ -28,12 +28,10 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
 public class Processor extends AbstractProcessor {
 
-    private static final String VIEW_HOLDER_FACTORY_CLASS_NAME = "ViewHolderFactory";
     private static final String VIEW_HOLDER_SUFFIX = "ViewHolder";
     private static final String GENERATED_CLASSES_PACKAGE_NAME = "com.zuluft.generated";
     private static final String GENERATED_VIEW_HOLDER_FACTORY_CLASS_NAME = "ViewHolderFactoryImpl";
@@ -55,7 +53,6 @@ public class Processor extends AbstractProcessor {
 
 
     private Messager mMessager;
-    private Elements mElements;
     private Filer mFiler;
     private List<ViewHolderInfo> mViewHolderInfos;
     private Map<TypeName, Integer> mRendererLayoutIdMapping;
@@ -78,7 +75,6 @@ public class Processor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnvironment) {
         super.init(processingEnvironment);
         mMessager = processingEnvironment.getMessager();
-        mElements = processingEnvironment.getElementUtils();
         mFiler = processingEnvironment.getFiler();
         mViewHolderInfos = new ArrayList<>();
         mRendererLayoutIdMapping = new HashMap<>();
@@ -87,19 +83,10 @@ public class Processor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        if (!checkAnnotatedElements(roundEnvironment)) {
-            return true;
-        }
-        if (!generateViewHolderClasses()) {
-            return true;
-        }
-        if (!generateViewHolderFactoryClass()) {
-            return true;
-        }
-        if (!generateAutoAdapterFactoryClass()) {
-            return true;
-        }
-        return false;
+        return !checkAnnotatedElements(roundEnvironment) ||
+                !generateViewHolderClasses() ||
+                !generateViewHolderFactoryClass() ||
+                !generateAutoAdapterFactoryClass();
     }
 
     private boolean generateAutoAdapterFactoryClass() {
