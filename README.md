@@ -21,7 +21,7 @@ annotationProcessor 'com.github.Zuluft:AutoAdapter:v2.3.1'
 
 ### Step 1:
 
-create layout xml file, for example ```item_footballer.xml``` which contains ```TextView```s with ids ```tvName```, ```tvNumber```, ```tvClub``` and ```ImageView``` with id ```ivDelete```
+Create layout xml file, for example ```item_footballer.xml``` which contains ```TextView```s with ids ```tvName```, ```tvNumber```, ```tvClub``` and ```ImageView``` with id ```ivDelete```
 
 ### Step 2 (Optional):
 
@@ -55,7 +55,7 @@ public final class FootballerModel {
 ```
 ### Step 3:
 
-create 'Renderer' class by the following way:
+Create 'Renderer' class by the following way:
 
 ```Java
    @Render(layout = R.layout.item_footballer,
@@ -81,7 +81,7 @@ public class FootballerRenderer{
 }
 ```
 ```@Render``` annotation is needed to generate ```ViewHolder``` for this ```Renderer``` by annotation processor.
-Inside ```@Render``` annotation ```layout``` value is an itemView layout id and ```@ViewField```s are informations about the views in this layout. Name of the generated ```ViewHolder``` will be <RendererClassName>ViewHolder, in this case ```FootballerRendererViewHolder```
+Inside ```@Render``` annotation ```layout``` value is an itemView layout id and ```@ViewField```s are informations about the views in this layout. Name of the generated ```ViewHolder``` will be RendererClassName+'ViewHolder', in this case ```FootballerRendererViewHolder```
 
 ### Step 4:
 
@@ -131,7 +131,7 @@ public class FootballerRenderer
 }
 ```
 
-As you see ```FootballerRendererViewHolder``` has ```tvName```, ```tvClub```, ```tvNumber``` fields.
+As you see generated ```FootballerRendererViewHolder``` has ```tvName```, ```tvClub```, ```tvNumber``` fields.
 
 ### Step 6:
 
