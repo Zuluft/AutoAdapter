@@ -81,7 +81,7 @@ public class FootballerRenderer{
 }
 ```
 ```@Render``` annotation is needed to generate ```ViewHolder``` for this ```Renderer``` by annotation processor.
-Inside ```@Render``` annotation ```layout``` value is an itemView layout id and ```@ViewField```s are informations about the views in this layout. Name of the generated ```ViewHolder``` will be RendererClassName+'ViewHolder', in this case ```FootballerRendererViewHolder```
+Inside ```@Render``` annotation ```layout``` value is an itemView layout id and ```@ViewField```s are containing information about the views in this layout. Name of the generated ```ViewHolder``` will be RendererClassName+'ViewHolder', in this case ```FootballerRendererViewHolder```
 
 ### Step 4:
 
