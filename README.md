@@ -25,7 +25,7 @@ Create layout xml file, for example ```item_footballer.xml``` which contains ```
 
 ### Step 2 (Optional):
 
-create model, which you want to be drawn on above created layout:
+create model, that you want to be drawn on above created layout:
 ```Java
 public final class FootballerModel {
     private final String name;
@@ -55,7 +55,7 @@ public final class FootballerModel {
 ```
 ### Step 3:
 
-Create 'Renderer' class by the following way:
+Create 'Renderer' class in the following way:
 
 ```Java
    @Render(layout = R.layout.item_footballer,
@@ -161,7 +161,7 @@ As you see generated ```FootballerRendererViewHolder``` has ```tvName```, ```tvC
 This line ```Stream.of(getFootballers()).map(FootballerRenderer::new).collect(Collectors.toList())``` converts ```FootballerModel``` to
 ```FootballerRenderer``` using [Stream](https://github.com/aNNiMON/Lightweight-Stream-API) 
 
-### Mmm... If I want to have heterogeneous items and layouts inside ```RecyclerView``` ?
+### Mmm... What If I want to have heterogeneous items and layouts inside ```RecyclerView``` ?
 AutoAdapter's working perfectly with heterogeneous items.
 You can add any descedent of ```Renderer``` to ```AutoAdapter```, for example it's not a problem to write the following:
 ```Java
