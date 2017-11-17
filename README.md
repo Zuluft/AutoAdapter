@@ -175,7 +175,7 @@ They all will draw their own layout.
 
 # How to add OnClickListener to itemView ?
 
-```AutoAdapter``` has ```clicks``` method, it has one required param. ```Renderer class```, one optional param. ```child view id``` and returns ```Rx2 Observable``` with ```ItemInfo``` as generic type. ```ItemInfo``` has 3 public final fields: ```position```, ```renderer```, ```viewHolder```.
+```AutoAdapter``` has ```clicks``` method, it has one required argument ```Renderer class```, one optional argument ```child view id``` and returns ```Rx2 Observable``` with ```ItemInfo``` as generic type. ```ItemInfo``` has 3 public final fields: ```position```, ```renderer```, ```viewHolder```.
 
 ```Java
 ...
