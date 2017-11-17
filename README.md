@@ -172,3 +172,29 @@ mAutoAdapter.add(new BoxerRenderer());
 ....
 ```
 They all will draw their own layout.
+
+# How to add OnClickListener to itemView ?
+
+```AutoAdapter``` has ```clicks``` method, it has one required param. ```Renderer class```, one optional param. ```child view id``` and returns ```Rx2 Observable``` with ```ItemInfo``` as generic type. ```ItemInfo``` has 3 public final fields: ```position```, ```renderer```, ```viewHolder```.
+
+```Java
+...
+mAutoAdapter.clicks(FootballerRenderer.class)
+                .map(itemInfo -> itemInfo.renderer)
+                .map(renderer -> renderer.footballerModel)
+                .subscribe(footballerModel ->
+                        Toast.makeText(this,
+                                footballerModel.getName(), Toast.LENGTH_LONG)
+                                .show());
+...
+```
+```Java
+...
+mAutoAdapter.clicks(FootballerRenderer.class, R.id.ivDelete)
+                .map(itemInfo -> itemInfo.position)
+                .subscribe(position -> {
+                    mAutoAdapter.remove(position);
+                    mAutoAdapter.notifyItemRemoved(position);
+                });
+...
+```
