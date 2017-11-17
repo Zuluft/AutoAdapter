@@ -151,7 +151,7 @@ As you see generated ```FootballerRendererViewHolder``` has ```tvName```, ```tvC
         return Arrays.asList(
                 new FootballerModel("Luis Suarez", 9, "Barcelona"),
                 new FootballerModel("Leo Messi", 10, "Barcelona"),
-                new FootballerModel("Ousmane Dembele", 11, "FC Barcelona"),
+                new FootballerModel("Ousmane Dembele", 11, "Barcelona"),
                 new FootballerModel("Harry Kane", 9, "Tottenham Hotspur"),
                 new FootballerModel("Dele Alli", 20, "Tottenham Hotspur"),
                 new FootballerModel("Alexis Sanchez", 7, "Arsenal")
@@ -303,7 +303,7 @@ public class SimpleSampleActivity
         return Arrays.asList(
                 new FootballerModel("Luis Suarez", 9, "Barcelona"),
                 new FootballerModel("Leo Messi", 10, "Barcelona"),
-                new FootballerModel("Ousmane Dembele", 11, "FC Barcelona"),
+                new FootballerModel("Ousmane Dembele", 11, "Barcelona"),
                 new FootballerModel("Harry Kane", 9, "Tottenham Hotspur"),
                 new FootballerModel("Dele Alli", 20, "Tottenham Hotspur"),
                 new FootballerModel("Alexis Sanchez", 7, "Arsenal")
