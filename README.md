@@ -198,3 +198,5 @@ mAutoAdapter.clicks(FootballerRenderer.class, R.id.ivDelete)
                 });
 ...
 ```
+
+## SortedAutoAdapter Sample:
