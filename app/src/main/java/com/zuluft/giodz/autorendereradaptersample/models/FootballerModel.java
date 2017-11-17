@@ -1,18 +1,28 @@
 package com.zuluft.giodz.autorendereradaptersample.models;
 
-/**
- * Created by user on 12/4/16.
- */
 
-public class FootballerModel {
-    public final String name;
-    public final int number;
-    public final String team;
+public final class FootballerModel {
+    private final String name;
+    private final int number;
+    private final String club;
 
-
-    public FootballerModel(String name, int number, String team) {
+    public FootballerModel(final String name,
+                           final int number,
+                           final String club) {
         this.name = name;
         this.number = number;
-        this.team = team;
+        this.club = club;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getClub() {
+        return club;
     }
 }

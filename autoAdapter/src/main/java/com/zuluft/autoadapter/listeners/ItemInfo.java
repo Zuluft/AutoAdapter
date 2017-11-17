@@ -6,7 +6,7 @@ import com.zuluft.autoadapter.renderables.AutoViewHolder;
 
 
 @SuppressWarnings("WeakerAccess")
-public class ItemInfo<T extends IRenderer, V extends AutoViewHolder> {
+public final class ItemInfo<T extends IRenderer, V extends AutoViewHolder> {
     public final int position;
     public final T renderer;
     public final V viewHolder;
