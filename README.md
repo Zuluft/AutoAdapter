@@ -264,12 +264,12 @@ public class FootballerOrderableRenderer
 ```
 
 ```Java
-public class SimpleSampleActivity
+public class SortedAutoAdapterSampleActivity
         extends
         AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private AutoAdapter mAutoAdapter;
+    private SortedAutoAdapter mSortedAutoAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -279,31 +279,29 @@ public class SimpleSampleActivity
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 LinearLayoutManager.VERTICAL));
-        mAutoAdapter = AutoAdapterFactory.createAutoAdapter();
-        mAutoAdapter.clicks(FootballerRenderer.class)
+        mSortedAutoAdapter = AutoAdapterFactory.createSortedAutoAdapter();
+        mSortedAutoAdapter.clicks(FootballerOrderableRenderer.class)
                 .map(itemInfo -> itemInfo.renderer)
                 .map(renderer -> renderer.footballerModel)
                 .subscribe(footballerModel ->
                         Toast.makeText(this,
                                 footballerModel.getName(), Toast.LENGTH_LONG)
                                 .show());
-        mAutoAdapter.clicks(FootballerRenderer.class, R.id.ivDelete)
+        mSortedAutoAdapter.clicks(FootballerOrderableRenderer.class, R.id.ivDelete)
                 .map(itemInfo -> itemInfo.position)
-                .subscribe(position -> {
-                    mAutoAdapter.remove(position);
-                    mAutoAdapter.notifyItemRemoved(position);
-                });
-        mAutoAdapter.addAll(Stream.of(getFootballers()).map(FootballerRenderer::new)
+                .subscribe(position ->
+                        mSortedAutoAdapter.remove(position));
+        mSortedAutoAdapter.updateAll(Stream.of(getFootballers())
+                .map(FootballerOrderableRenderer::new)
                 .collect(Collectors.toList()));
-        mRecyclerView.setAdapter(mAutoAdapter);
+        mRecyclerView.setAdapter(mSortedAutoAdapter);
     }
-
 
     private List<FootballerModel> getFootballers() {
         return Arrays.asList(
                 new FootballerModel("Luis Suarez", 9, "Barcelona"),
                 new FootballerModel("Leo Messi", 10, "Barcelona"),
-                new FootballerModel("Ousmane Dembele", 11, "Barcelona"),
+                new FootballerModel("Ousmane Dembele", 11, "FC Barcelona"),
                 new FootballerModel("Harry Kane", 9, "Tottenham Hotspur"),
                 new FootballerModel("Dele Alli", 20, "Tottenham Hotspur"),
                 new FootballerModel("Alexis Sanchez", 7, "Arsenal")
