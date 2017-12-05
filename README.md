@@ -1,4 +1,10 @@
 # AutoAdapter
+
+[![Release](https://jitpack.io/v/Zuluft/AutoAdapter.svg)](https://jitpack.io/#Zuluft/AutoAdapter)
+[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-AutoAdapter-green.svg?style=flat )]( https://android-arsenal.com/details/1/6470 )
+[![](https://jitpack.io/v/Zuluft/AutoAdapter/month.svg)](https://jitpack.io/#Zuluft/AutoAdapter)
+
+
 This Repository simplifies working with RecyclerView Adapter
 
 ## Gradle:
@@ -13,8 +19,8 @@ Add it in your root build.gradle at the end of repositories:
 ```
 Add dependency to app gradle:
 ```Groovy
-implementation 'com.github.Zuluft:AutoAdapter:v2.3.1'
-annotationProcessor 'com.github.Zuluft:AutoAdapter:v2.3.1'
+implementation 'com.github.Zuluft:AutoAdapter:v2.4.1'
+annotationProcessor 'com.github.Zuluft:AutoAdapter:v2.4.1'
 ```
 
 ## Simple Sample:
