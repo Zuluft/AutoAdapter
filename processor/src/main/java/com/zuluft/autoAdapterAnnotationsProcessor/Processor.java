@@ -184,7 +184,7 @@ public class Processor extends AbstractProcessor {
                         .build())
                 .returns(TypeName.INT);
         for (Map.Entry<TypeName, Integer> entry : mRendererLayoutIdMapping.entrySet()) {
-            builder.beginControlFlow("if($L.getClass().equals($T.class))",
+            builder.beginControlFlow("if($L.getClass().isAssignableFrom($T.class))",
                     "renderer", entry.getKey())
                     .addStatement("return $L", entry.getValue())
                     .endControlFlow();

@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.example.giodz.autorendereradaptersample"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -27,8 +27,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation 'com.annimon:stream:1.1.8'
     implementation project(':autoAdapterAnnotations')
     implementation project(':autoAdapter')
