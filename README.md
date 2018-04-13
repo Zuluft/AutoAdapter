@@ -91,7 +91,7 @@ Inside ```@Render``` annotation ```layout``` value is an itemView layout id and 
 
 ### Step 4:
 
-Rebuild the project
+Rebuild the project. Rebuilding generates ViewHolder class (```FootballerRendererViewHolder```), that we use in ```Step 5```.
 
 ### Step 5:
 
