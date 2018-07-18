@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
@@ -50,9 +51,25 @@ public class SimpleSampleActivity
                     mAutoAdapter.remove(position);
                     mAutoAdapter.notifyItemRemoved(position);
                 });
-        mAutoAdapter.addAll(Stream.of(getFootballers()).map(FootballerRenderer::new)
-                .collect(Collectors.toList()));
         mRecyclerView.setAdapter(mAutoAdapter);
+        mAutoAdapter.updateAll(Stream.of(getFootballers()).map(FootballerRenderer::new)
+                .collect(Collectors.toList()));
+    }
+
+    public void onUpdateClicked(View view) {
+        mAutoAdapter.updateAll(Stream.of(getUpdatedFootballers()).map(FootballerRenderer::new)
+                .collect(Collectors.toList()), false);
+    }
+
+    private List<FootballerModel> getUpdatedFootballers() {
+        return Arrays.asList(
+                new FootballerModel("Luis Suarez", 20, "Barcelona"),
+                new FootballerModel("Leo Messi", 21, "Barcelona"),
+                new FootballerModel("Ousmane Dembele", 22, "FC Barcelona"),
+                new FootballerModel("Harry Kane", 25, "Tottenham Hotspur"),
+                new FootballerModel("Dele Alli", 47, "Tottenham Hotspur"),
+                new FootballerModel("Alexis Sanchez", 8, "Arsenal")
+        );
     }
 
 

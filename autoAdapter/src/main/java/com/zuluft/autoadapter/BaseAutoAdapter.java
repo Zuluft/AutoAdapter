@@ -1,5 +1,6 @@
 package com.zuluft.autoadapter;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -10,10 +11,11 @@ import android.view.ViewGroup;
 import com.zuluft.autoadapter.factories.AutoViewHolderFactory;
 import com.zuluft.autoadapter.listeners.ItemInfo;
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
-import com.zuluft.autoadapter.renderables.IRenderer;
+import com.zuluft.autoadapter.renderables.Renderer;
 import com.zuluft.autoadapter.structures.IAdapter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observer;
@@ -21,7 +23,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-public abstract class BaseAutoAdapter<T extends IRenderer>
+public abstract class BaseAutoAdapter<T extends Renderer>
         extends
         RecyclerView.Adapter<AutoViewHolder>
         implements
@@ -29,21 +31,22 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
 
     private final AutoViewHolderFactory mAutoViewHolderFactory;
 
-    private final Map<Class<? extends IRenderer>, PublishSubject>
+    private final Map<Class<? extends Renderer>, PublishSubject>
             mItemViewClickBinding = new HashMap<>();
-    private final Map<Class<? extends IRenderer>, Map<Integer, PublishSubject>>
+    private final Map<Class<? extends Renderer>, Map<Integer, PublishSubject>>
             mChildViewsClickBinding = new HashMap<>();
-    private final SparseArray<Class<? extends IRenderer>>
-            mLayoutRendererMaping = new SparseArray<>();
+    private final SparseArray<Class<? extends Renderer>>
+            mLayoutRendererMapping = new SparseArray<>();
 
     public BaseAutoAdapter(final AutoViewHolderFactory autoViewHolderFactory) {
         this.mAutoViewHolderFactory = autoViewHolderFactory;
     }
 
+    @NonNull
     @Override
     public AutoViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int layoutId) {
         AutoViewHolder viewHolder = mAutoViewHolderFactory.createViewHolder(parent, layoutId);
-        Class rendererClass = mLayoutRendererMaping.get(layoutId);
+        Class rendererClass = mLayoutRendererMapping.get(layoutId);
         final PublishSubject itemClickPublishSubject = mItemViewClickBinding.get(rendererClass);
         if (itemClickPublishSubject != null) {
             viewHolder.getViewHolderOnClickObservable()
@@ -56,9 +59,9 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
                         @SuppressWarnings("unchecked")
                         @Override
                         public void onNext(AutoViewHolder autoViewHolder) {
-                            int positioon = autoViewHolder.getAdapterPosition();
+                            int position = autoViewHolder.getAdapterPosition();
                             ItemInfo info =
-                                    new ItemInfo(positioon, getItem(positioon), autoViewHolder);
+                                    new ItemInfo(position, getItem(position), autoViewHolder);
                             itemClickPublishSubject.onNext(info);
                         }
 
@@ -89,9 +92,9 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
                             @SuppressWarnings("unchecked")
                             @Override
                             public void onNext(AutoViewHolder autoViewHolder) {
-                                int positioon = autoViewHolder.getAdapterPosition();
+                                int position = autoViewHolder.getAdapterPosition();
                                 ItemInfo info =
-                                        new ItemInfo(positioon, getItem(positioon), autoViewHolder);
+                                        new ItemInfo(position, getItem(position), autoViewHolder);
                                 publishSubject.onNext(info);
                             }
 
@@ -110,14 +113,15 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
         return viewHolder;
     }
 
-    public final <X extends AutoViewHolder, Y extends IRenderer<X>> PublishSubject<ItemInfo<Y, X>>
+    public final <X extends AutoViewHolder, Y extends Renderer<X>> PublishSubject<ItemInfo<Y, X>>
     clicks(@NonNull final Class<Y> clazz) {
         PublishSubject<ItemInfo<Y, X>> publishSubject = PublishSubject.create();
         mItemViewClickBinding.put(clazz, publishSubject);
         return publishSubject;
     }
 
-    public final <X extends AutoViewHolder, Y extends IRenderer<X>> PublishSubject<ItemInfo<Y, X>>
+    @SuppressLint("UseSparseArrays")
+    public final <X extends AutoViewHolder, Y extends Renderer<X>> PublishSubject<ItemInfo<Y, X>>
     clicks(@NonNull final Class<Y> clazz, @IdRes final int viewId) {
         PublishSubject<ItemInfo<Y, X>> publishSubject = PublishSubject.create();
         Map<Integer, PublishSubject> map = mChildViewsClickBinding.get(clazz);
@@ -129,12 +133,16 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
         return publishSubject;
     }
 
-
     @SuppressWarnings("unchecked")
     @Override
-    public void onBindViewHolder(final AutoViewHolder holder,
-                                 final int position) {
-        getItem(position).apply(holder);
+    public void onBindViewHolder(@NonNull AutoViewHolder holder, int position,
+                                 @NonNull List<Object> payloads) {
+        getItem(position).apply(holder, payloads);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull AutoViewHolder holder, int position) {
+
     }
 
     @Override
@@ -142,8 +150,8 @@ public abstract class BaseAutoAdapter<T extends IRenderer>
     public int getItemViewType(final int position) {
         final T item = getItem(position);
         final int layoutId = mAutoViewHolderFactory.getLayoutId(getItem(position));
-        if (mLayoutRendererMaping.indexOfKey(layoutId) < 0) {
-            mLayoutRendererMaping.put(layoutId, item.getClass());
+        if (mLayoutRendererMapping.indexOfKey(layoutId) < 0) {
+            mLayoutRendererMapping.put(layoutId, item.getClass());
         }
         return layoutId;
     }

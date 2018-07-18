@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.example.giodz.autorendereradaptersample"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -27,9 +27,15 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-alpha3'
+//    implementation "android.arch.paging:runtime:1.0.1"
     implementation 'com.annimon:stream:1.1.8'
+
+    implementation "android.arch.paging:runtime:1.0.1"
+    implementation "android.arch.paging:rxjava2:1.0.1"
+
+
     implementation project(':autoAdapterAnnotations')
     implementation project(':autoAdapter')
     annotationProcessor project(':processor')

@@ -2,13 +2,13 @@ package com.zuluft.autoadapter.structures;
 
 
 import android.support.annotation.NonNull;
-import com.zuluft.autoadapter.renderables.IRenderer;
+
+import com.zuluft.autoadapter.renderables.Renderer;
 
 import java.util.List;
 
 @SuppressWarnings({"unchecked", "unused"})
-public interface IAdapter<T extends IRenderer> {
-
+public interface IAdapter<T extends Renderer> {
 
     void add(@NonNull T item);
 
@@ -24,9 +24,14 @@ public interface IAdapter<T extends IRenderer> {
 
     void update(int position, @NonNull T newItem);
 
+    void updateAll(@NonNull List<T> items);
+
+    void updateAll(@NonNull List<T> items, boolean reorder);
+
+    void updateAllAsync(@NonNull List<T> items);
+
     int indexOf(@NonNull T item);
 
     T getItem(int position);
-
 
 }

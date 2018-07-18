@@ -5,12 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
-import com.zuluft.autoadapter.renderables.IRenderer;
+import com.zuluft.autoadapter.renderables.Renderer;
 
 
 public abstract class AutoViewHolderFactory {
 
-    public abstract int getLayoutId(IRenderer renderer);
+    public abstract int getLayoutId(Renderer renderer);
 
     public abstract AutoViewHolder createViewHolder(ViewGroup parent, int layoutId);
 
