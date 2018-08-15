@@ -46,6 +46,8 @@ public class Processor extends AbstractProcessor {
             ClassName.get("android.view", "View");
     private static final ClassName sAutoAdapterClassName =
             ClassName.get("com.zuluft.autoadapter", "AutoAdapter");
+    private static final ClassName sSortedAutoAdapterClassName =
+            ClassName.get("com.zuluft.autoadapter", "SortedAutoAdapter");
     private static final ClassName sViewHolderFactoryImplClassName =
             ClassName.get(GENERATED_CLASSES_PACKAGE_NAME, GENERATED_VIEW_HOLDER_FACTORY_CLASS_NAME);
 
@@ -102,7 +104,17 @@ public class Processor extends AbstractProcessor {
         return TypeSpec.classBuilder("AutoAdapterFactory")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethod(createGetAutoAdapterStaticMethod())
+                .addMethod(createGetSortedAutoAdapterStaticMethod())
                 .addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build())
+                .build();
+    }
+
+    private MethodSpec createGetSortedAutoAdapterStaticMethod() {
+        return MethodSpec.methodBuilder("createSortedAutoAdapter")
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL, Modifier.STATIC)
+                .returns(sSortedAutoAdapterClassName)
+                .addStatement("return new $L(new $T())", "SortedAutoAdapter",
+                        sViewHolderFactoryImplClassName)
                 .build();
     }
 
@@ -168,8 +180,7 @@ public class Processor extends AbstractProcessor {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("getLayoutId")
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(
-                        ClassName.get("com.zuluft.autoadapter.renderables",
-                                "Renderer"), "renderer", Modifier.FINAL)
+                        ClassName.get("com.zuluft.autoadapter.renderables", "IRenderer"), "renderer", Modifier.FINAL)
                         .build())
                 .returns(TypeName.INT);
         for (Map.Entry<TypeName, Integer> entry : mRendererLayoutIdMapping.entrySet()) {
