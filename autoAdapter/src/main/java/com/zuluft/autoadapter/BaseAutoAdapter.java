@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 
 import com.zuluft.autoadapter.factories.AutoViewHolderFactory;
 import com.zuluft.autoadapter.listeners.ItemInfo;
+import com.zuluft.autoadapter.listeners.ViewHolderCreationListener;
 import com.zuluft.autoadapter.renderables.AutoViewHolder;
-import com.zuluft.autoadapter.renderables.Renderer;
+import com.zuluft.autoadapter.renderables.IRenderer;
 import com.zuluft.autoadapter.structures.IAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-public abstract class BaseAutoAdapter<T extends Renderer>
+public abstract class BaseAutoAdapter<T extends IRenderer>
         extends
         RecyclerView.Adapter<AutoViewHolder>
         implements
@@ -31,15 +33,22 @@ public abstract class BaseAutoAdapter<T extends Renderer>
 
     private final AutoViewHolderFactory mAutoViewHolderFactory;
 
-    private final Map<Class<? extends Renderer>, PublishSubject>
+    private final Map<Class<? extends IRenderer>, PublishSubject>
             mItemViewClickBinding = new HashMap<>();
-    private final Map<Class<? extends Renderer>, Map<Integer, PublishSubject>>
+    private final Map<Class<? extends IRenderer>, Map<Integer, PublishSubject>>
             mChildViewsClickBinding = new HashMap<>();
-    private final SparseArray<Class<? extends Renderer>>
+    private final SparseArray<Class<? extends IRenderer>>
             mLayoutRendererMapping = new SparseArray<>();
+
+    private final List<ViewHolderCreationListener> mViewHolderCreationListeners = new ArrayList<>();
 
     public BaseAutoAdapter(final AutoViewHolderFactory autoViewHolderFactory) {
         this.mAutoViewHolderFactory = autoViewHolderFactory;
+    }
+
+    public final void addViewHolderCreationListener(@NonNull final ViewHolderCreationListener
+                                                            viewHolderCreationListener) {
+        mViewHolderCreationListeners.add(viewHolderCreationListener);
     }
 
     @NonNull
@@ -59,9 +68,9 @@ public abstract class BaseAutoAdapter<T extends Renderer>
                         @SuppressWarnings("unchecked")
                         @Override
                         public void onNext(AutoViewHolder autoViewHolder) {
-                            int position = autoViewHolder.getAdapterPosition();
+                            int positioon = autoViewHolder.getAdapterPosition();
                             ItemInfo info =
-                                    new ItemInfo(position, getItem(position), autoViewHolder);
+                                    new ItemInfo(positioon, getItem(positioon), autoViewHolder);
                             itemClickPublishSubject.onNext(info);
                         }
 
@@ -92,9 +101,9 @@ public abstract class BaseAutoAdapter<T extends Renderer>
                             @SuppressWarnings("unchecked")
                             @Override
                             public void onNext(AutoViewHolder autoViewHolder) {
-                                int position = autoViewHolder.getAdapterPosition();
+                                int positioon = autoViewHolder.getAdapterPosition();
                                 ItemInfo info =
-                                        new ItemInfo(position, getItem(position), autoViewHolder);
+                                        new ItemInfo(positioon, getItem(positioon), autoViewHolder);
                                 publishSubject.onNext(info);
                             }
 
@@ -110,10 +119,14 @@ public abstract class BaseAutoAdapter<T extends Renderer>
                         });
             }
         }
+        for (ViewHolderCreationListener mViewHolderCreationListener :
+                mViewHolderCreationListeners) {
+            mViewHolderCreationListener.onViewHolderCreated(viewHolder);
+        }
         return viewHolder;
     }
 
-    public final <X extends AutoViewHolder, Y extends Renderer<X>> PublishSubject<ItemInfo<Y, X>>
+    public final <X extends AutoViewHolder, Y extends IRenderer<X>> PublishSubject<ItemInfo<Y, X>>
     clicks(@NonNull final Class<Y> clazz) {
         PublishSubject<ItemInfo<Y, X>> publishSubject = PublishSubject.create();
         mItemViewClickBinding.put(clazz, publishSubject);
@@ -121,7 +134,7 @@ public abstract class BaseAutoAdapter<T extends Renderer>
     }
 
     @SuppressLint("UseSparseArrays")
-    public final <X extends AutoViewHolder, Y extends Renderer<X>> PublishSubject<ItemInfo<Y, X>>
+    public final <X extends AutoViewHolder, Y extends IRenderer<X>> PublishSubject<ItemInfo<Y, X>>
     clicks(@NonNull final Class<Y> clazz, @IdRes final int viewId) {
         PublishSubject<ItemInfo<Y, X>> publishSubject = PublishSubject.create();
         Map<Integer, PublishSubject> map = mChildViewsClickBinding.get(clazz);
@@ -133,16 +146,12 @@ public abstract class BaseAutoAdapter<T extends Renderer>
         return publishSubject;
     }
 
+
     @SuppressWarnings("unchecked")
     @Override
-    public void onBindViewHolder(@NonNull AutoViewHolder holder, int position,
-                                 @NonNull List<Object> payloads) {
-        getItem(position).apply(holder, payloads);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull AutoViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull final AutoViewHolder holder,
+                                 final int position) {
+        getItem(position).apply(holder);
     }
 
     @Override
