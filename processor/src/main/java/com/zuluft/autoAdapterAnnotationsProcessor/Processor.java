@@ -30,6 +30,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 
+@SuppressWarnings("UnusedReturnValue")
 public class Processor extends AbstractProcessor {
 
     private static final String VIEW_HOLDER_SUFFIX = "ViewHolder";
@@ -83,10 +84,11 @@ public class Processor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-        return !checkAnnotatedElements(roundEnvironment) ||
-                !generateViewHolderClasses() ||
-                !generateViewHolderFactoryClass() ||
-                !generateAutoAdapterFactoryClass();
+        checkAnnotatedElements(roundEnvironment);
+        generateViewHolderClasses();
+        generateViewHolderFactoryClass();
+        generateAutoAdapterFactoryClass();
+        return false;
     }
 
     private boolean generateAutoAdapterFactoryClass() {

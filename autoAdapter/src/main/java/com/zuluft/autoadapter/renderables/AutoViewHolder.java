@@ -23,17 +23,36 @@ public class AutoViewHolder extends RecyclerView.ViewHolder {
     public Observable<AutoViewHolder> getViewHolderOnClickObservable() {
         return RxView.clicks(itemView).map(new Function<Object, AutoViewHolder>() {
             @Override
-            public AutoViewHolder apply(Object view) throws Exception {
+            public AutoViewHolder apply(Object view) {
                 return AutoViewHolder.this;
             }
         });
+    }
+
+    public Observable<AutoViewHolder> getViewHolderOnLongClickObservable() {
+        return RxView.longClicks(itemView).map(new Function<Object, AutoViewHolder>() {
+            @Override
+            public AutoViewHolder apply(Object o) {
+                return AutoViewHolder.this;
+            }
+        });
+    }
+
+    public Observable<AutoViewHolder> getViewHolderOnChildLongClickObservable(@IdRes int viewId) {
+        return RxView.longClicks(itemView.findViewById(viewId))
+                .map(new Function<Object, AutoViewHolder>() {
+                    @Override
+                    public AutoViewHolder apply(Object o) {
+                        return AutoViewHolder.this;
+                    }
+                });
     }
 
     public final Observable<AutoViewHolder> getViewHolderOnChildClickObservable(@IdRes int viewId) {
         return RxView.clicks(itemView.findViewById(viewId))
                 .map(new Function<Object, AutoViewHolder>() {
                     @Override
-                    public AutoViewHolder apply(Object o) throws Exception {
+                    public AutoViewHolder apply(Object o) {
                         return AutoViewHolder.this;
                     }
                 });

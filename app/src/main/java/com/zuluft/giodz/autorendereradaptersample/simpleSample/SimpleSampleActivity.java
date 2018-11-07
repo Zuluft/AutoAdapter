@@ -37,14 +37,14 @@ public class SimpleSampleActivity
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 LinearLayoutManager.VERTICAL));
         mAutoAdapter = AutoAdapterFactory.createAutoAdapter();
-        mAutoAdapter.clicks(FootballerRenderer.class)
+        mAutoAdapter.longClicks(FootballerRenderer.class)
                 .map(itemInfo -> itemInfo.renderer)
                 .map(renderer -> renderer.footballerModel)
                 .subscribe(footballerModel ->
                         Toast.makeText(this,
                                 footballerModel.getName(), Toast.LENGTH_LONG)
                                 .show());
-        mAutoAdapter.clicks(FootballerRenderer.class, R.id.ivDelete)
+        mAutoAdapter.longClicks(FootballerRenderer.class, R.id.ivDelete)
                 .map(itemInfo -> itemInfo.position)
                 .subscribe(position -> {
                     mAutoAdapter.remove(position);
